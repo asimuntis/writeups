@@ -11,7 +11,8 @@ Having `read/write` primitive in kernel space we can escalate our privileges by 
 Obtaining `current_task`  address:
 
 ```bash
-➤ grep 'D current_task' System.map                                                     ffffffff8183a040 D current_task
+➤ grep 'D current_task' System.map                                                     
+ffffffff8183a040 D current_task
 ```
 
 Let's test if we can read from this address:
@@ -41,7 +42,8 @@ We're back. Our scouter says the power level is: ffff888003372300
 We have obtained `task_struct` address from the `current_task`. To escalate privileges to root we have to modify `task_struct->cred` field at offset `0x400` (offset obtained from the disassembly of the `commit_cred` function from the provided kernel image).  We will use global variable `init_cred`, which contains credentials of the `init` process that is running as `root`.
 
 ```bash
-➤ grep init_cred System.map                                                                    ffffffff8183f4c0 D init_cred
+➤ grep init_cred System.map                                                                    
+ffffffff8183f4c0 D init_cred
 ```
 
 To decompress the kernel image I've used this tool: `https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-vmlinux`
