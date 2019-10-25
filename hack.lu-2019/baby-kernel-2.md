@@ -39,7 +39,7 @@ flux_baby_2 ioctl nr 901 called
 We're back. Our scouter says the power level is: ffff888003372300
 ```
 
-We have obtained `task_struct` address from the `current_task`. To escalate privileges to root we have to modify `task_struct->cred` field at offset `0x400` (offset obtained from the disassembly of the `commit_cred` function from the provided kernel image).  We will use global variable `init_cred`, which contains credentials of the `init` process that is running as `root`.
+We have obtained `task_struct` address from the `current_task`. To escalate privileges to root we have to modify `task_struct->cred` field at offset `0x400` (offset obtained from the disassembly of the `commit_cred` function from the provided kernel image).  We will use `init_cred` struct, which contains credentials of the `init` process that is running as `root`.
 
 ```bash
 ➤ grep init_cred System.map                                                                    
